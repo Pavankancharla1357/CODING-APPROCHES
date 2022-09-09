@@ -1,0 +1,77 @@
+https://www.hackerearth.com/practice/math/number-theory/primality-tests/practice-problems/algorithm/shootout-in-london-1/
+
+#include <bits/stdc++.h> 
+using namespace std; 
+bool pri[1000001]; 
+// int prime[100001]={0}; 
+void check(int n) 
+{ 
+memset(pri,true,sizeof(pri)); 
+pri[0]=pri[1]=false; 
+for(int i=2;i*i<=n;i++) 
+{ 
+ if(pri[i]) 
+ { 
+  for(int j=i*i;j<=n;j+=i) 
+     pri[j]=false; 
+ } 
+} 
+return; 
+} 
+int main()  
+{ 
+ 
+check(1000001); 
+int t,n,i; 
+cin >>n; 
+int arr[n]; 
+vector<int>first; 
+// queue<int>last; 
+for(i=0;i<n;i++) 
+{ 
+ cin>>arr[i]; 
+ if(pri[arr[i]]) 
+  first.push_back(i); 
+} 
+// for(i=0;i<first.size();i++) 
+//    cout<<first[i]<<" "; 
+if(first.size()==0) 
+{ 
+    for(i=0;i<n;i++) 
+      cout<<-1<<" "; 
+} 
+else 
+{ 
+    int j=-1; 
+    for(i=0;i<n;i++) 
+    { 
+     int flag=0; 
+     if(pri[arr[i]]) 
+     { 
+      arr[i]=i; 
+      cout<<arr[i]+1<<" "; 
+      flag=1; 
+      j++; 
+     } 
+     else if(i<first[0]) 
+       arr[i]=first[0]; 
+     else if(i>first[first.size()-1]) 
+       arr[i]=first[first.size()-1]; 
+     else 
+     { 
+      if(abs(i-first[j])<=abs(i-first[j+1])) 
+      { 
+       arr[i]=first[j]; 
+      } 
+      else 
+      { 
+       arr[i]=first[j+1]; 
+       j++; 
+      } 
+     } 
+     if(!flag) 
+      cout<<arr[i]+1<<" "; 
+    } 
+} 
+return 0; 
+}
